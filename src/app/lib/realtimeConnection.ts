@@ -23,6 +23,7 @@ export async function createRealtimeConnection(
   const baseUrl = "https://api.openai.com/v1/realtime";
   const model = "gpt-4o-realtime-preview-2024-12-17";
 
+  console.log(`${baseUrl}?model=${model}`);
   const sdpResponse = await fetch(`${baseUrl}?model=${model}`, {
     method: "POST",
     body: offer.sdp,
@@ -33,6 +34,7 @@ export async function createRealtimeConnection(
   });
 
   const answerSdp = await sdpResponse.text();
+  console.log(answerSdp)
   const answer: RTCSessionDescriptionInit = {
     type: "answer",
     sdp: answerSdp,
@@ -41,4 +43,4 @@ export async function createRealtimeConnection(
   await pc.setRemoteDescription(answer);
 
   return { pc, dc };
-} 
+}
